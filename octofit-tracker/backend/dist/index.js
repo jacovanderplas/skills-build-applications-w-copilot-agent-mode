@@ -7,21 +7,48 @@ const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const activities_1 = __importDefault(require("./routes/activities"));
+const leaderboard_1 = __importDefault(require("./routes/leaderboard"));
+const teams_1 = __importDefault(require("./routes/teams"));
+const users_1 = __importDefault(require("./routes/users"));
+const workouts_1 = __importDefault(require("./routes/workouts"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const PORT = Number(process.env.PORT) || 8000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/octofit_db';
+const codespaceName = process.env.CODESPACE_NAME;
+const baseUrl = codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev`
+    : `http://localhost:${PORT}`;
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
-app.get('/api/health', (_req, res) => {
-    res.status(200).json({ status: 'ok' });
+app.get('/api', (_req, res) => {
+    res.status(200).json({
+        name: 'OctoFit Tracker API',
+        baseUrl,
+        routes: [
+            '/api/users/',
+            '/api/teams/',
+            '/api/activities/',
+            '/api/leaderboard/',
+            '/api/workouts/',
+        ],
+    });
 });
+app.get('/api/health', (_req, res) => {
+    res.status(200).json({ status: 'ok', baseUrl });
+});
+app.use('/api/users', users_1.default);
+app.use('/api/teams', teams_1.default);
+app.use('/api/activities', activities_1.default);
+app.use('/api/leaderboard', leaderboard_1.default);
+app.use('/api/workouts', workouts_1.default);
 const startServer = async () => {
     try {
         await mongoose_1.default.connect(MONGODB_URI);
         console.log(`Connected to MongoDB at ${MONGODB_URI}`);
         app.listen(PORT, () => {
-            console.log(`OctoFit backend listening on http://localhost:${PORT}`);
+            console.log(`OctoFit backend listening on ${baseUrl}`);
         });
     }
     catch (error) {
