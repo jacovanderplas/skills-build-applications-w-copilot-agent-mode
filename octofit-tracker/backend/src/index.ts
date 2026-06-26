@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
 
+import { connectDatabase, MONGODB_URI } from './database';
 import activitiesRouter from './routes/activities';
 import leaderboardRouter from './routes/leaderboard';
 import teamsRouter from './routes/teams';
@@ -13,7 +14,6 @@ dotenv.config();
 
 const app = express();
 const PORT = Number(process.env.PORT) || 8000;
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/octofit_db';
 const codespaceName = process.env.CODESPACE_NAME;
 const baseUrl = codespaceName
   ? `https://${codespaceName}-8000.app.github.dev`
@@ -48,7 +48,7 @@ app.use('/api/workouts', workoutsRouter);
 
 const startServer = async (): Promise<void> => {
   try {
-    await mongoose.connect(MONGODB_URI);
+    await connectDatabase();
     console.log(`Connected to MongoDB at ${MONGODB_URI}`);
 
     app.listen(PORT, () => {
