@@ -1,0 +1,49 @@
+:root {
+  --accent: #1f7a5c;
+  --accent-strong: #14543f;
+  --accent-soft: #dff3ea;
+  --bg: #f7f8f4;
+  --border: #d9dfd2;
+  --shadow: rgba(25, 41, 30, 0.08) 0 16px 36px;
+  --surface: #ffffff;
+  --text: #516054;
+  --text-strong: #17251d;
+  --sans: Avenir, Montserrat, Corbel, sans-serif;
+  --heading: Georgia, Cambria, serif;
+
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.55 var(--sans);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background:
+    linear-gradient(135deg, rgba(31, 122, 92, 0.08), transparent 34%),
+    radial-gradient(circle at top right, rgba(244, 180, 64, 0.14), transparent 30%),
+    var(--bg);
+  margin: 0;
+}
+
+#root {
+  min-height: 100svh;
+}
+
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 700;
+  color: var(--text-strong);
+}
+
+h1 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  letter-spacing: 0;
+}
+
+p {
+  margin: 0;
+}
