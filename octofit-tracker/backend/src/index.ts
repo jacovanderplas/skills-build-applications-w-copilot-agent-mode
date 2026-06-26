@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import mongoose from 'mongoose';
 
-import { connectDatabase, MONGODB_URI } from './database';
+import { connectDatabase, MONGODB_URI } from './config/database';
 import activitiesRouter from './routes/activities';
 import leaderboardRouter from './routes/leaderboard';
 import teamsRouter from './routes/teams';
