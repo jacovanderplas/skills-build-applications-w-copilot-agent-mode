@@ -1,7 +1,6 @@
 import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
-import mongoose from 'mongoose';
 
 import { connectDatabase, MONGODB_URI } from './config/database';
 import activitiesRouter from './routes/activities';
@@ -13,11 +12,11 @@ import workoutsRouter from './routes/workouts';
 dotenv.config();
 
 const app = express();
-const PORT = Number(process.env.PORT) || 8000;
+const PORT = 8000;
 const codespaceName = process.env.CODESPACE_NAME;
 const baseUrl = codespaceName
   ? `https://${codespaceName}-8000.app.github.dev`
-  : `http://localhost:${PORT}`;
+  : 'http://localhost:8000';
 
 app.use(cors());
 app.use(express.json());
